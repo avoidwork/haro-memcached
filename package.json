@@ -1,0 +1,44 @@
+{
+  "name": "haro-memcached",
+  "version": "1.0.0",
+  "description": "Memcached persistent storage adapter for Harō",
+  "main": "lib/index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/avoidwork/haro-memcached.git"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "keywords": [
+    "memcached",
+    "persistent storage",
+    "adapter",
+    "haro",
+    "immutable",
+    "data",
+    "store",
+    "datastore",
+    "api"
+  ],
+  "author": "Jason Mulligan <jason.mulligan@avoidwork.com>",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/avoidwork/haro-memcached/issues"
+  },
+  "homepage": "https://github.com/avoidwork/haro-memcached",
+  "devDependencies": {
+    "babel-eslint": "^3.1.17",
+    "grunt": "^0.4.5",
+    "grunt-babel": "^5.0.0",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-concat": "^0.5.1",
+    "grunt-contrib-watch": "^0.6.1",
+    "grunt-eslint": "^15.0.0"
+  },
+  "dependencies": {
+    "es6-map": "^0.1.1",
+    "es6-promise": "^2.1.1",
+    "memcached": "^2.1.0"
+  }
+}
