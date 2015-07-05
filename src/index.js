@@ -24,7 +24,7 @@ function getClient (id, locations, options) {
 	return registry.get(id);
 }
 
-function mcached (store, op, key, data) {
+function adapter (store, op, key, data) {
 	let defer = deferred(),
 		record = key !== undefined,
 		config = store.adapters.memcached,
@@ -67,4 +67,4 @@ function mcached (store, op, key, data) {
 	return defer.promise;
 }
 
-module.exports = mcached;
+module.exports = adapter;
