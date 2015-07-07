@@ -1,6 +1,6 @@
 {
   "name": "haro-memcached",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Memcached persistent storage adapter for Harō",
   "main": "lib/index.js",
   "repository": {
