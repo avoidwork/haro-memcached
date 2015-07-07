@@ -33,6 +33,9 @@ module.exports = function (grunt) {
 		eslint: {
 			target: ["lib/index.es6.js"]
 		},
+		nodeunit : {
+			all : ["test/*.js"]
+		},
 		watch : {
 			grunt: {
 				files : "Gruntfile.js",
@@ -51,12 +54,13 @@ module.exports = function (grunt) {
 
 	// tasks
 	grunt.loadNpmTasks("grunt-contrib-concat");
+	grunt.loadNpmTasks("grunt-contrib-nodeunit");
 	grunt.loadNpmTasks("grunt-contrib-watch");
 	grunt.loadNpmTasks("grunt-babel");
 	grunt.loadNpmTasks("grunt-eslint");
 
 	// aliases
-	grunt.registerTask("test", ["eslint"]);
+	grunt.registerTask("test", ["eslint", "nodeunit"]);
 	grunt.registerTask("build", ["concat", "babel"]);
 	grunt.registerTask("default", ["build", "test"]);
 };
