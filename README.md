@@ -16,6 +16,8 @@ Require the adapter & register it with `haro.register(key, fn)`. The key must ma
 prefix will be used if set, otherwise `store.id` will be the prefix for localStorage items. Records will be have keys 
 as `prefix_key`, while DataStores will be `prefix`.
 
+The `connection` object, and every key in it is optional.
+
 ```javascript
 var haro = require('haro'),
     store;

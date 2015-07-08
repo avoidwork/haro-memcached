@@ -8,7 +8,7 @@ var adapter = require("../lib/index.js"),
 		adapters: {
 			memcached: {
 				prefix: "nodeunit",
-				ttl: 19
+				ttl: 0
 			}
 		}
 	},
