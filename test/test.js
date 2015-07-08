@@ -1,6 +1,6 @@
 var adapter = require("../lib/index.js"),
 	haro = require("haro"),
-	memjs = require("memjs"),
+	Client = require("memcache-plus"),
 	data = [{guid: "abc", yay: true}, {guid: "def", yay: false}],
 	config = {
 		key: "guid",
@@ -8,12 +8,11 @@ var adapter = require("../lib/index.js"),
 		adapters: {
 			memcached: {
 				prefix: "nodeunit",
-				locations: "localhost:11211",
-				lifetime: 600
+				ttl: 19
 			}
 		}
 	},
-    client = memjs.Client.create(config.adapters.memcached.locations),
+    client = new Client(),
 	lifetime = config.adapters.memcached.lifetime;
 
 function clone (arg) {
