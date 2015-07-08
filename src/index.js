@@ -2,7 +2,7 @@
 
 const Promise = require("es6-promise").Promise;
 const Map = require("es6-map");
-const Client = require("memcache-plus");
+const Memcached = require("memcached");
 let registry = new Map();
 
 function deferred () {
@@ -16,9 +16,9 @@ function deferred () {
 	return {resolve: resolver, reject: rejecter, promise: promise};
 }
 
-function getClient (id, config) {
+function getClient (id, locations, options) {
 	if (!registry.has(id)) {
-		registry.set(id, new Client(config));
+		registry.set(id, new Memcached(locations, options));
 	}
 
 	return registry.get(id);
@@ -30,8 +30,7 @@ function adapter (store, op, key, data) {
 		config = store.adapters.memcached,
 		prefix = config.prefix || store.id,
 		lkey = prefix + (record ? "_" + key : ""),
-		client = getClient(store.id, config.connection),
-		retry;
+		client = getClient(store.id, config.locations, config.options);
 
 	if (op === "get") {
 		client.get(lkey, function (e, reply) {
@@ -48,25 +47,13 @@ function adapter (store, op, key, data) {
 			}
 		});
 	} else if (op === "remove") {
-		retry = function () {
-			client.delete(lkey, function (e) {
-				if (e) {
-					defer.reject(e);
-				} else {
-					client.get(lkey, function (e2, reply2) {
-						if (e2) {
-							defer.reject(e2);
-						} else if (!reply2) {
-							defer.resolve(true);
-						} else {
-							retry();
-						}
-					});
-				}
-			});
-		};
-
-		retry();
+		client.del(lkey, function (e) {
+			if (e) {
+				defer.reject(e);
+			} else {
+				defer.resolve(true);
+			}
+		});
 	} else if (op === "set") {
 		client.set(lkey, JSON.stringify(record ? data : store.toArray()), config.ttl || 0, function (e) {
 			if (e) {
@@ -74,7 +61,7 @@ function adapter (store, op, key, data) {
 			} else {
 				defer.resolve(true);
 			}
-		}, config.ttl);
+		});
 	}
 
 	return defer.promise;

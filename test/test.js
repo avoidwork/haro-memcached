@@ -1,6 +1,6 @@
 var adapter = require("../lib/index.js"),
 	haro = require("haro"),
-	Client = require("memcache-plus"),
+	Memcached = require("memcached"),
 	data = [{guid: "abc", yay: true}, {guid: "def", yay: false}],
 	config = {
 		key: "guid",
@@ -8,15 +8,13 @@ var adapter = require("../lib/index.js"),
 		adapters: {
 			memcached: {
 				prefix: "nodeunit",
-				connection: {
-					hosts: ["localhost:11211"]
-				},
+				locations: "localhost:11211",
 				ttl: 0
 			}
 		}
 	},
-    client = new Client(),
-	lifetime = config.adapters.memcached.lifetime;
+    client = new Memcached(config.adapters.memcached.locations),
+	ttl = config.adapters.memcached.ttl;
 
 function clone (arg) {
 	return JSON.parse(JSON.stringify(arg));
@@ -29,9 +27,9 @@ exports["get - datastore"] = {
 		this.store = haro(null, config);
 		this.store.register("memcached", adapter);
 		this.key = this.store.adapters.memcached.prefix;
-		this.client.set(this.key, JSON.stringify(this.data), function () {
+		this.client.set(this.key, JSON.stringify(this.data), ttl, function () {
 			done();
-		}, lifetime);
+		});
 	},
 	test: function (test) {
 		var self = this;
@@ -65,7 +63,7 @@ exports["get - record"] = {
 		this.store = haro(null, config);
 		this.store.register("memcached", adapter);
 		this.key = this.store.adapters.memcached.prefix + "_" + this.data[0].guid;
-		this.client.set(this.key, JSON.stringify(this.data[0]), function () {
+		this.client.set(this.key, JSON.stringify(this.data[0]), ttl, function () {
 			done();
 		});
 	},
@@ -137,7 +135,7 @@ exports["set - record"] = {
 		this.store = haro(null, config);
 		this.store.register("memcached", adapter);
 		this.key = this.store.adapters.memcached.prefix;
-		this.client.set(this.key, JSON.stringify(this.data), function () {
+		this.client.set(this.key, JSON.stringify(this.data), ttl, function () {
 			done();
 		});
 	},

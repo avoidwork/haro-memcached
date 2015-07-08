@@ -16,7 +16,7 @@ Require the adapter & register it with `haro.register(key, fn)`. The key must ma
 prefix will be used if set, otherwise `store.id` will be the prefix for localStorage items. Records will be have keys 
 as `prefix_key`, while DataStores will be `prefix`.
 
-The `connection` object, and every key in it is optional.
+For configuration options see [memcached](https://www.npmjs.com/package/memcached).
 
 ```javascript
 var haro = require('haro'),
@@ -27,12 +27,8 @@ store = haro(null, {
   adapters: {
     memcached: {
         prefix: "myData",
-        connection: {
-            autodiscover: false,
-            disabled: false,
-            hosts: "String or Array",
-            reconnect: true
-        },
+        locations: "String or Array",
+        options: {},
         ttl: 10
     }
   }
