@@ -25,12 +25,13 @@ store = haro(null, {
   adapters: {
     memcached: {
         prefix: "myData",
-        locations: "String",
-        auth: {
-            username: "username",
-            password: "password"
+        connection: {
+            autodiscover: false,
+            disabled: false,
+            hosts: "String or Array",
+            reconnect: true
         },
-        expiration: 10
+        ttl: 10
     }
   }
 });

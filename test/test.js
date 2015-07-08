@@ -227,11 +227,9 @@ exports["remove - record"] = {
 
 		test.expect(3);
 		test.equal(this.store.total, 0, "Should be 0");
-		this.store.logging = true;
 		this.store.batch(this.data, "set").then(function (args) {
 			key = args[0][0];
 			test.equal(self.store.total, 2, "Should be 2");
-			console.log("removing the record now..");
 			return self.store.unload("memcached", key);
 		}, function (e) {
 			throw e;
@@ -245,7 +243,7 @@ exports["remove - record"] = {
 					test.equal(ldata, null, "Should match");
 				}
 
-				self.store.unload("memcached", key);
+				self.store.unload("memcached");
 				test.done();
 			});
 		}, function (e) {
