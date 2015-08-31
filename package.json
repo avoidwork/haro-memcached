@@ -1,6 +1,6 @@
 {
   "name": "haro-memcached",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Memcached persistent storage adapter for Harō",
   "main": "lib/index.js",
   "repository": {
@@ -40,7 +40,7 @@
   },
   "dependencies": {
     "es6-map": "^0.1.1",
-    "es6-promise": "^2.1.1",
-    "memcached": "^2.1.0"
+    "memcached": "^2.1.0",
+    "tiny-defer": "^1.0.2"
   }
 }
